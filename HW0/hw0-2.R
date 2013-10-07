@@ -1,5 +1,0 @@
-x=runif(10000, min=0, max=2*pi)
-y=runif(10000, min=0, max=1)
-u=y*cos(x)
-v=y*sin(x)
-plot(u, v, xlab="u", ylab="v")
