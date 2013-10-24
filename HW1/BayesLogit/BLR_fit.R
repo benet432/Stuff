@@ -49,7 +49,7 @@ if (length(args)==0){
 ########################################################################################
 ########################################################################################
 
-bayes1= function(m, y, X, beta.star, beta.0, Sigma.0.inv)
+"bayes1"<- function(m, y, X, beta.star, beta.0, Sigma.0.inv)
   
 {
   n= length(m)
@@ -118,7 +118,9 @@ bayes1= function(m, y, X, beta.star, beta.0, Sigma.0.inv)
   }
   beta=beta[((burnin+2):(burnin+niter+1)), ]
   for (j in 1:2)
+  {
     beta_ci[, j]=quantile(beta[, j], probs=seq(0.01, 0.99, 0.01))
+  }
   write.table(beta_ci, file=paste('results/blr_res_', as.character(sim_num),'.csv', sep=""), sep=",", row.names = FALSE, col.names = FALSE)
   
 }
@@ -133,6 +135,7 @@ data=read.csv(file=paste('data/blr_data_', as.character(sim_num), '.csv', sep=""
 m=data$n
 y=data$y
 X=as.matrix(data[, 3:4])
+bayes.logreg()
 
 # etc... (more needed here)
 #################################################
