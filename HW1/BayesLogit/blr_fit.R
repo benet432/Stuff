@@ -71,3 +71,8 @@ bayes.logreg = function(m, y, X, beta.0=c(0, 0), Sigma.0.inv=diag(1, 2), niter=1
   write.table(beta_ci, file=paste('results/blr_res_',sim_num,'.csv', sep=""), sep=",", row.names = FALSE, col.names = FALSE)
   
 }
+
+data=read.csv(file=paste('data/blr_data_', sim_num, '.csv', sep=""), header=FALSE, sep=",")
+m=data$n
+y=data$y
+X=as.matrix(data[, 3:4])
