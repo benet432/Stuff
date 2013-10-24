@@ -1,4 +1,3 @@
-
 ##
 #
 # Logistic regression
@@ -7,9 +6,8 @@
 # \beta \sim N\left(\beta_{0},\Sigma_{0}\right)
 #
 ##
-
-library(mvtnorm)
 library(MASS)
+library(mvtnorm)
 library(coda)
 
 ########################################################################################
@@ -58,10 +56,9 @@ if (length(args)==0){
   return(pi)
 }
 
-
-"bayes.logreg" <- function(n,y,X,beta.0=c(0, 0),Sigma.0.inv= diag(1, 2), niter=10000,burnin=1000,
-                           print.every=1000,retune=100,verbose=TRUE)
+"bayes.logreg" <- function(m, y, X, beta.0=c(0, 0), Sigma.0.inv=diag(1, 2), niter=10000, burnin=1000, print.every=1000, retune=200, verbose=TRUE)
 {
+  beta_ci=matrix(numeric(2*99), 99, 2)
   v_2=0.01
   Sigma_new=v_2*diag(1, 2)
   beta=matrix(numeric(2*(burnin+niter+1)), (burnin+niter+1), 2)
@@ -116,25 +113,24 @@ if (length(args)==0){
     }  
   }
   beta=beta[((burnin+2):(burnin+niter+1)), ]
-  return(beta)
-  
-  
+  for (j in 1:2)
+  {
+    beta_ci[, j]=quantile(beta[, j], probs=seq(0.01, 0.99, 0.01))
+  }
+  return(beta_ci)
 }
 
 #################################################
 # Set up the specifications:
-
+beta.0 = matrix(c(0,0))
+Sigma.0.inv = diag(rep(1.0,p))
+niter = 10000
 data=read.csv(file=paste('data/blr_data_', as.character(sim_num), '.csv', sep=""), header=FALSE, sep=",")
 m=data$n
 y=data$y
 X=as.matrix(data[, 3:4])
-beta_ci=matrix(numeric(2*99), 99, 2)
-beta=bayes.logreg(m, X, y)
-for (j in 1:2)
-{
-  beta_ci[, j]=quantile(beta[, j], probs=seq(0.01, 0.99, 0.01))
-}
-write.table(beta_ci, file=paste('results/blr_res_', as.character(sim_num),'.csv', sep=""), sep=",", row.names = FALSE, col.names = FALSE)
+beta_cre=bayes.logreg(m, y, X, beta.0, Sigma.0.inv=diag(1, 2), niter=10000, burnin=1000, print.every=1000, retune=200, verbose=TRUE)
+write.table(beta_cre, file=paste('results/blr_res_', as.character(sim_num), '.csv', sep=""), sep=",", row.names = FALSE, col.names = FALSE)
 
 # etc... (more needed here)
 #################################################
@@ -150,12 +146,5 @@ write.table(beta_ci, file=paste('results/blr_res_', as.character(sim_num),'.csv'
 # Write results to a (99 x p) csv file...
 
 # Go celebrate.
- 
+
 cat("done. :)\n")
-
-
-
-
-
-
-
