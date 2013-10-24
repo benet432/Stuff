@@ -59,7 +59,7 @@ if (length(args)==0){
 }
 
 
-"bayes.logreg" <- function(n,y,X,beta.0,Sigma.0.inv,niter=10000,burnin=1000,
+"bayes.logreg" <- function(n,y,X,beta.0=c(0, 0),Sigma.0.inv= diag(1, 2), niter=10000,burnin=1000,
                            print.every=1000,retune=100,verbose=TRUE)
 {
   v_2=0.01
@@ -123,9 +123,6 @@ if (length(args)==0){
 
 #################################################
 # Set up the specifications:
-beta.0 <- matrix(c(0,0))
-Sigma.0.inv <- diag(rep(1.0,2))
-niter <- 10000
 
 data=read.csv(file=paste('data/blr_data_', as.character(sim_num), '.csv', sep=""), header=FALSE, sep=",")
 m=data$n
