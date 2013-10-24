@@ -123,7 +123,7 @@ if (length(args)==0){
 #################################################
 # Set up the specifications:
 
-data=read.csv(file=paste('data/blr_data_', as.character(sim_num), '.csv', sep=""), header=FALSE, sep=",")
+data=read.csv(file=paste('data/blr_data_', as.character(sim_num), '.csv', sep=""), header=TRUE, sep=",")
 m=data$n
 y=data$y
 X=as.matrix(data[, 3:4])
