@@ -119,6 +119,11 @@ if (length(args)==0){
 beta.0 <- matrix(c(0,0))
 Sigma.0.inv <- diag(rep(1.0,2))
 niter <- 10000
+
+data=read.csv(file=paste('data/blr_data_', as.character(sim_num), '.csv', sep=""), header=FALSE, sep=",")
+m=data$n
+y=data$y
+X=as.matrix(data[, 3:4])
 # etc... (more needed here)
 #################################################
 
