@@ -59,7 +59,7 @@ if (length(args)==0){
 "bayes.logreg" <- function(m, y, X, beta.0=c(0, 0), Sigma.0.inv=diag(1, 2), niter=10000, burnin=1000, print.every=1000, retune=200, verbose=TRUE)
 {
   beta_ci=matrix(numeric(2*99), 99, 2)
-  v_2=0.01
+  v_2=1
   Sigma_new=v_2*diag(1, 2)
   beta=matrix(numeric(2*(burnin+niter+1)), (burnin+niter+1), 2)
   beta[1,]= beta.0
