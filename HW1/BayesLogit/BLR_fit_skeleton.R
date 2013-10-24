@@ -124,6 +124,7 @@ data=read.csv(file=paste('data/blr_data_', as.character(sim_num), '.csv', sep=""
 m=data$n
 y=data$y
 X=as.matrix(data[, 3:4])
+bayes.logreg()
 # etc... (more needed here)
 #################################################
 
