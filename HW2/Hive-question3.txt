@@ -1,0 +1,10 @@
+CREATE TABLE gro(group INT, value DOUBLE) row format delimited fields terminated BY '\t' stored AS textfile;
+LOAD DATA INPATH '/user/hadoop/data/groups.txt' INTO TABLE gro;
+
+SELECT SUM(value)/COUNT(value)
+FROM gro
+GROUP BY group;
+ 
+SELECT (SUM(value * value) - (SUM(value) * AVG(value)))/(COUNT(value) - 1)
+FROM gro
+GROUP BY group;
