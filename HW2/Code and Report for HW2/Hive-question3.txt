@@ -1,10 +1,17 @@
+##Get the data onto the HDFS
+hadoop fs -mkdir data
+hadoop distcp s3://sta250bucket/group.txt data/
+
+##Create table and get data into the table
 CREATE TABLE gro(group INT, value DOUBLE) row format delimited fields terminated BY '\t' stored AS textfile;
 LOAD DATA INPATH '/user/hadoop/data/groups.txt' INTO TABLE gro;
 
+##Calculate Within-Group Mean
 SELECT SUM(value)/COUNT(value)
 FROM gro
 GROUP BY group;
- 
+
+##Calculate Within-Group Variance
 SELECT (SUM(value * value) - (SUM(value) * AVG(value)))/(COUNT(value) - 1)
 FROM gro
 GROUP BY group;
