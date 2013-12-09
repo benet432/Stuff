@@ -88,7 +88,7 @@ data=data[, -11]
 data=data.frame(data, diagnosis=diagnosis)
 beta.0=matrix(rep(0, 11), 11, 1)
 Sigma.0.inv=diag(1000, 11)
-mean_start=glm(diagnosis~ . , data , family = "binomial")$coefficients
+mean_start=glm(diagnosis~ .-1 , data , family = "binomial")$coefficients
 data=data.frame(intercept=1, data)
 y=data$diagnosis
 X=data[,-12]

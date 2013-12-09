@@ -5,6 +5,8 @@
 #include <curand_kernel.h>
 #include <math_constants.h>
 
+#include <math.h>
+
 extern "C"
 {
 
@@ -23,7 +25,7 @@ rtruncnorm_kernel(float *vals, int n,
     int idx = myblock * blocksize + subthread;
 
     // Setup the RNG:
-
+    srand(idx)
     // Sample:
 
     return;
